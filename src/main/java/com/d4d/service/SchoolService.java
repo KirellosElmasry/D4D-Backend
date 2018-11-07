@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.demo.service;
+package com.d4d.service;
 
-import com.example.demo.model.School;
+import com.d4d.model.School;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.demo.repository.SchoolRepository;
+import com.d4d.repository.SchoolRepository;
 
 /**
  *
@@ -22,8 +22,8 @@ public class SchoolService {
     private SchoolRepository schoolRepository;
 
     //create operation 
-    public School create(String name, String area, String address, String review, String rate) {
-        return schoolRepository.save(new School(name, area, address, review, rate));
+    public School create(School school) {
+        return schoolRepository.save(school);
     }
 
     //Retrive operation
@@ -34,18 +34,21 @@ public class SchoolService {
     public School getByName(String name) {
         return schoolRepository.findByName(name);
     }
+    public School getById(String id) {
+        return schoolRepository.findById(id);
+    }
 
     //update operation 
-    public School update(String name, String area, String address, String review, String rate) {
-        
-        School p = schoolRepository.findByName(name);
-        p.setName(name);
+    public School update(School school) {
+        /*
+        School p = schoolRepository.findById(school.getId());
+        p.setName(school);
         p.setArea(area);
         p.setAddress(address);
         p.setReview(review);
         p.setRate(rate);
-        
-        return schoolRepository.save(p);
+        */
+        return schoolRepository.save(school);
     }
     
     //Delete operation

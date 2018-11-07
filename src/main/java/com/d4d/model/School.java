@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.demo.model;
+package com.d4d.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -29,6 +29,9 @@ public class School {
         this.address = address;
         this.review = review;
         this.rate = rate;
+    }
+
+    public School() {
     }
 
     public String getId() {
