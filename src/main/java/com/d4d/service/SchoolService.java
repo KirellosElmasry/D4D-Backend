@@ -40,14 +40,7 @@ public class SchoolService {
 
     //update operation 
     public School update(School school) {
-        /*
-        School p = schoolRepository.findById(school.getId());
-        p.setName(school);
-        p.setArea(area);
-        p.setAddress(address);
-        p.setReview(review);
-        p.setRate(rate);
-        */
+
         return schoolRepository.save(school);
     }
     

@@ -5,8 +5,8 @@
  */
 package com.d4d.controller;
 
-import com.d4d.model.Doctor;
-import com.d4d.service.DoctorService;
+import com.d4d.model.User;
+import com.d4d.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,27 +23,28 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author kirellos
  */
+@RequestMapping("/user")
 @RestController
-@RequestMapping("/doctor")
-public class DoctorController {
+public class UserController {
+    
     //for Token based authentication
     private String apiKey = "1234";
 
     @Autowired
-    private DoctorService doctorService;
+    private UserService userService;
 
     @ResponseBody
     @RequestMapping(value = {"/create"}, method = RequestMethod.POST, consumes = "application/json")    
-    public ResponseEntity<String> create(@RequestHeader("apikey") String api_key, @RequestBody Doctor doctor) {
+    public ResponseEntity<String> create(@RequestHeader("apikey") String api_key, @RequestBody User user) {
 
         if (api_key.equals(apiKey)) {
 
             try {
-                Doctor p = doctorService.create(doctor);
-                return new ResponseEntity<>("Doctor inserted successfully with id: " + p.getId(), HttpStatus.OK);
+                User p = userService.create(user);
+                return new ResponseEntity<>("User inserted successfully with id: " + p.getId(), HttpStatus.OK);
             } catch (Exception e) {
                 e.printStackTrace();
-                return new ResponseEntity<>("error when adding new Doctor", HttpStatus.EXPECTATION_FAILED);
+                return new ResponseEntity<>("error when adding new User", HttpStatus.EXPECTATION_FAILED);
             }
 
         } else {
@@ -52,31 +53,32 @@ public class DoctorController {
     }
 
     @RequestMapping("/get")
-    public Doctor getDoctor(@RequestParam String name) {
-        return doctorService.getByName(name);
+    public User getUser(@RequestParam String name) {
+        return userService.getByName(name);
     }
 
     @RequestMapping("/getAll")
-    public List<Doctor> getAll() {
-        return doctorService.getAll();
+    public List<User> getAll() {
+        return userService.getAll();
     }
 
     @ResponseBody
     @RequestMapping(value = {"/update"}, method = RequestMethod.POST, consumes = "application/json")
-    public String update(@RequestHeader("apikey") String api_key, @RequestBody Doctor doctor) {
-        Doctor p = doctorService.update(doctor);
+    public String update(@RequestHeader("apikey") String api_key, @RequestBody User user) {
+        User p = userService.update(user);
         return p.toString();
     }
 
     @RequestMapping("/delete")
     public String delete(@RequestParam String name) {
-        doctorService.delete(name);
+        userService.delete(name);
         return "Deleted " + name;
     }
 
     @RequestMapping("/deleteAll")
     public String deleteAll() {
-        doctorService.deleteAll();
+        userService.deleteAll();
         return "All Deleted";
     }
 }
+

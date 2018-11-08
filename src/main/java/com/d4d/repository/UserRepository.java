@@ -5,7 +5,7 @@
  */
 package com.d4d.repository;
 
-import com.d4d.model.Doctor;
+import com.d4d.model.User;
 import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -15,9 +15,12 @@ import org.springframework.stereotype.Repository;
  * @author Kirellos
  */
 @Repository
-public interface DoctorRepository extends MongoRepository<Doctor, Object>{
-    
-    public Doctor findById(String id);
-    public Doctor findByName(String name);
-    public List<Doctor> findByAddress(String address);
+public interface UserRepository extends MongoRepository<User, Object>{
+   
+    public User findById(String id);
+    public User findByName(String name);
+    public User findByUserName(String userName);
+    public User findByApiKey(String apiKey);
+    public List<User> findByAddress(String address);
+
 }
