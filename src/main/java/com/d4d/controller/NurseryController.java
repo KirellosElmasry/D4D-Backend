@@ -7,7 +7,7 @@ package com.d4d.controller;
 
 import com.d4d.model.Nursery;
 import com.d4d.service.NurseryService;
-import com.d4d.util.ApiKey;
+import com.d4d.controller.util.ApiKey;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

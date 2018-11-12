@@ -5,6 +5,8 @@
  */
 package com.d4d.model;
 
+import com.d4d.model.request.MapLocation;
+import java.util.HashMap;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,24 +19,18 @@ public class Doctor {
     
     @Id
     private String id;
-    private String name;    
+    private String name;
     private String address;
-    private String clinicTimes;
+    private String area;
     private String mobile;
+    private String openingTimes;
     private String phone;
-    private String mapLocation;
-    private String notes;
-    private String rate;
+    private MapLocation mapLocation;
+    private String description;
+    private HashMap<String, String> reviews;
+    private double rate;
 
-    public Doctor(String name, String address, String clinicTimes, String mobile, String phone, String mapLocation, String notes, String rate) {
-        this.name = name;
-        this.address = address;
-        this.clinicTimes = clinicTimes;
-        this.mobile = mobile;
-        this.phone = phone;
-        this.mapLocation = mapLocation;
-        this.notes = notes;
-        this.rate = rate;
+    public Doctor() {
     }
 
     public String getId() {
@@ -61,12 +57,12 @@ public class Doctor {
         this.address = address;
     }
 
-    public String getClinicTimes() {
-        return clinicTimes;
+    public String getArea() {
+        return area;
     }
 
-    public void setClinicTimes(String clinicTimes) {
-        this.clinicTimes = clinicTimes;
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public String getMobile() {
@@ -77,6 +73,14 @@ public class Doctor {
         this.mobile = mobile;
     }
 
+    public String getOpeningTimes() {
+        return openingTimes;
+    }
+
+    public void setOpeningTimes(String openingTimes) {
+        this.openingTimes = openingTimes;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -85,34 +89,42 @@ public class Doctor {
         this.phone = phone;
     }
 
-    public String getMapLocation() {
+    public MapLocation getMapLocation() {
         return mapLocation;
     }
 
-    public void setMapLocation(String mapLocation) {
+    public void setMapLocation(MapLocation mapLocation) {
         this.mapLocation = mapLocation;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getRate() {
+    public HashMap<String, String> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(HashMap<String, String> reviews) {
+        this.reviews = reviews;
+    }
+
+    public double getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(double rate) {
         this.rate = rate;
     }
 
     @Override
     public String toString() {
-        return "Doctor{" + "id=" + id + ", name=" + name + ", address=" + address + ", clinicTimes=" + clinicTimes + ", mobile=" + mobile + ", phone=" + phone + ", mapLocation=" + mapLocation + ", notes=" + notes + ", rate=" + rate + '}';
+        return "Doctor{" + "id=" + id + ", name=" + name + ", address=" + address + ", area=" + area + ", mobile=" + mobile + ", openingTimes=" + openingTimes + ", phone=" + phone + ", mapLocation=" + mapLocation + ", description=" + description + ", reviews=" + reviews + ", rate=" + rate + '}';
     }
-    
-    
+
+
 }

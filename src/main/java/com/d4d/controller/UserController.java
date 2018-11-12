@@ -7,6 +7,7 @@ package com.d4d.controller;
 
 import com.d4d.model.User;
 import com.d4d.service.UserService;
+import com.d4d.controller.util.ApiKey;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,21 +28,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
     
-    //for Token based authentication
-    private String apiKey = "1234";
-
+     //for Token based authentication
+    @Autowired
+    private ApiKey apiKey;
+    
     @Autowired
     private UserService userService;
 
     @ResponseBody
-    @RequestMapping(value = {"/create"}, method = RequestMethod.POST, consumes = "application/json")    
+    @RequestMapping(value = {"/create"}, method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<String> create(@RequestHeader("apikey") String api_key, @RequestBody User user) {
 
-        if (api_key.equals(apiKey)) {
+        if (apiKey.checkApiKey(api_key)) {
 
             try {
+
                 User p = userService.create(user);
                 return new ResponseEntity<>("User inserted successfully with id: " + p.getId(), HttpStatus.OK);
+
             } catch (Exception e) {
                 e.printStackTrace();
                 return new ResponseEntity<>("error when adding new User", HttpStatus.EXPECTATION_FAILED);
@@ -53,32 +57,91 @@ public class UserController {
     }
 
     @RequestMapping("/get")
-    public User getUser(@RequestParam String name) {
-        return userService.getByName(name);
+    public ResponseEntity<User> getUser(@RequestHeader("apikey") String api_key, @RequestParam String name) {
+        if (apiKey.checkApiKey(api_key)) {
+            try {
+
+                User user = userService.getByName(name);
+                return new ResponseEntity<>(user, HttpStatus.OK);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @RequestMapping("/getAll")
-    public List<User> getAll() {
-        return userService.getAll();
+    public ResponseEntity<List<User>> getAll(@RequestHeader("apikey") String api_key) {
+
+        if (apiKey.checkApiKey(api_key)) {
+            try {
+                List<User> users = userService.getAll();
+                return new ResponseEntity<>(users, HttpStatus.OK);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = {"/update"}, method = RequestMethod.POST, consumes = "application/json")
-    public String update(@RequestHeader("apikey") String api_key, @RequestBody User user) {
-        User p = userService.update(user);
-        return p.toString();
+    public ResponseEntity<String> update(@RequestHeader("apikey") String api_key, @RequestBody User user) {
+
+        if (apiKey.checkApiKey(api_key)) {
+            try {
+
+                User p = userService.update(user);
+                return new ResponseEntity<>(p.toString(), HttpStatus.OK);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @RequestMapping("/delete")
-    public String delete(@RequestParam String name) {
-        userService.delete(name);
-        return "Deleted " + name;
+    public ResponseEntity<String> delete(@RequestHeader("apikey") String api_key, @RequestParam String name) {
+
+        if (apiKey.checkApiKey(api_key)) {
+            try {
+
+                userService.delete(name);
+                return new ResponseEntity<>("Deleted " + name, HttpStatus.OK);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @RequestMapping("/deleteAll")
-    public String deleteAll() {
-        userService.deleteAll();
-        return "All Deleted";
+    public ResponseEntity<String> deleteAll(@RequestHeader("apikey") String api_key) {
+
+        if (apiKey.checkApiKey(api_key)) {
+            try {
+
+                userService.deleteAll();
+                return new ResponseEntity<>("All Users Deleted", HttpStatus.OK);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 }
-

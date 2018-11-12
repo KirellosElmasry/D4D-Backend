@@ -7,7 +7,7 @@ package com.d4d.controller;
 
 import com.d4d.model.Physiotherapy;
 import com.d4d.service.PhysiotherapyService;
-import com.d4d.util.ApiKey;
+import com.d4d.controller.util.ApiKey;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

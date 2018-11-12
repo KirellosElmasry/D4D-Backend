@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.d4d.util;
+package com.d4d.controller.util;
 
 import com.d4d.model.User;
 import com.d4d.service.UserService;

@@ -5,6 +5,7 @@
  */
 package com.d4d.model;
 
+import java.util.HashMap;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,13 +19,41 @@ public class User {
     private String id;
     private String name;
     private String userName;
-    private String area;
-    private String address;
     private String password;
-    private String rate;
+    private String address;
+    private String area;
+    private String mobile;
     private String apiKey;
+    private String description;
+    private HashMap<String, String> reviews;
+    private double rate;
+   
 
     public User() {
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public HashMap<String, String> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(HashMap<String, String> reviews) {
+        this.reviews = reviews;
     }
 
     public String getUserName() {
@@ -75,11 +104,11 @@ public class User {
         this.password = password;
     }
 
-    public String getRate() {
+    public double getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(double rate) {
         this.rate = rate;
     }
 

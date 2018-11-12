@@ -5,6 +5,8 @@
  */
 package com.d4d.model;
 
+import com.d4d.model.request.MapLocation;
+import java.util.HashMap;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,18 +20,15 @@ public class School {
     @Id
     private String id;
     private String name;
-    private String area;
     private String address;
-    private String review;
-    private String rate;
+    private String area;
+    private String mobile;
+    private String phone;
+    private MapLocation mapLocation;
+    private String description;
+    private HashMap<String, String> reviews;
+    private double rate;
 
-    public School(String name, String area, String address, String review, String rate) {
-        this.name = name;
-        this.area = area;
-        this.address = address;
-        this.review = review;
-        this.rate = rate;
-    }
 
     public School() {
     }
@@ -66,25 +65,57 @@ public class School {
         this.address = address;
     }
 
-    public String getReview() {
-        return review;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setReview(String review) {
-        this.review = review;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public String getRate() {
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public MapLocation getMapLocation() {
+        return mapLocation;
+    }
+
+    public void setMapLocation(MapLocation mapLocation) {
+        this.mapLocation = mapLocation;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public HashMap<String, String> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(HashMap<String, String> reviews) {
+        this.reviews = reviews;
+    }
+
+    public double getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(double rate) {
         this.rate = rate;
     }
 
     @Override
     public String toString() {
-        return "School{" + "id=" + id + ", name=" + name + ", area=" + area + ", address=" + address + ", review=" + review + ", rate=" + rate + '}';
+        return "School{" + "id=" + id + ", name=" + name + ", address=" + address + ", area=" + area + ", mobile=" + mobile + ", phone=" + phone + ", mapLocation=" + mapLocation + ", description=" + description + ", reviews=" + reviews + ", rate=" + rate + '}';
     }
-    
+
 }
