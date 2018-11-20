@@ -6,7 +6,9 @@
 package com.d4d.controller;
 
 import com.d4d.model.LoginData;
+import com.d4d.model.Token;
 import com.d4d.model.User;
+import com.d4d.service.TokenService;
 import com.d4d.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,34 +25,48 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class LoginController {
-    
+
     @Autowired
     private UserService userService;
-    
+
+    @Autowired
+    private TokenService tokenService;
+
     @ResponseBody
     @RequestMapping(value = {"/login"}, method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<String> login(@RequestBody LoginData loginData) {
 
-        if(loginData.getUserName() != null && loginData.getPassword() != null){
+        if (loginData.getUserName() != null && loginData.getPassword() != null) {
             try {
-                
+
                 User user = userService.getByUserName(loginData.getUserName());
-                
-                if(user != null){
-                    if(user.getPassword().equals(loginData.getPassword())){
-                         return new ResponseEntity<>(user.getApiKey(), HttpStatus.OK); 
-                    }else{
-                        return new ResponseEntity<>("wrong password", HttpStatus.UNAUTHORIZED); 
+
+                if (user != null) {
+                    if (user.getPassword().equals(loginData.getPassword())) {
+                        //success login 
+                        //generate apiKey and save it to db
+                        
+                        String apiKey = tokenService.generate();
+                        
+                        tokenService.create( new Token(apiKey, user.getId()));
+                        
+                        // change apikey for this user 
+                        user.setApiKey(apiKey);
+                        userService.update(user);
+                        
+                        return new ResponseEntity<>(apiKey, HttpStatus.OK);
+                    } else {
+                        return new ResponseEntity<>("wrong password", HttpStatus.UNAUTHORIZED);
                     }
-                }else{
-                  return new ResponseEntity<>("User not found.", HttpStatus.UNAUTHORIZED);   
+                } else {
+                    return new ResponseEntity<>("User not found.", HttpStatus.UNAUTHORIZED);
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
                 return new ResponseEntity<>("error when login", HttpStatus.EXPECTATION_FAILED);
             }
-        }else{
+        } else {
             return new ResponseEntity<>("Missing userName or password", HttpStatus.BAD_REQUEST);
         }
     }
